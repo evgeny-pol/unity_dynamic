@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class PoolableObject : MonoBehaviour
 {
     public event Action<PoolableObject> Deactivated;
@@ -13,6 +14,6 @@ public class PoolableObject : MonoBehaviour
     public void ResetInternalState()
     {
         foreach (IResetableComponent resetableComponent in GetComponents<IResetableComponent>())
-            resetableComponent.ResetInternalState();
+            resetableComponent.ResetComponentState();
     }
 }

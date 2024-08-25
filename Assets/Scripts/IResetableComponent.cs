@@ -1,4 +1,4 @@
 ﻿public interface IResetableComponent
 {
-    void ResetInternalState();
+    void ResetComponentState();
 }

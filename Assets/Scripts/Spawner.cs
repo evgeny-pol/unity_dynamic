@@ -4,10 +4,9 @@ using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] Vector3 _area;
+    [SerializeField] private Vector3 _area;
     [SerializeField] private float _interval;
-    [SerializeField] PoolableObject _objectToSpawn;
-    [SerializeField] private bool _rigidbodyTeleport;
+    [SerializeField] private PoolableObject _objectToSpawn;
 
     private Coroutine _spawnCoroutine;
     private ObjectPool<PoolableObject> _pool;

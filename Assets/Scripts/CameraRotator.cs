@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class CameraController : MonoBehaviour
+public class CameraRotator : MonoBehaviour
 {
     private const int RotateCommandButton = InputConstants.SecondMouseButton;
 

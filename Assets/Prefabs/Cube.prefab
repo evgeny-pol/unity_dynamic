@@ -9,10 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7164027983742375947}
-  - component: {fileID: 4052154380993073031}
-  - component: {fileID: 6621670246478436336}
-  - component: {fileID: 2525253540249477330}
-  - component: {fileID: 8595249564209004175}
+  - component: {fileID: 1381165064564765354}
   - component: {fileID: 5183189123474886528}
   - component: {fileID: 3511772612672134597}
   - component: {fileID: 5511378838860031601}
@@ -40,7 +37,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4052154380993073031
+--- !u!114 &1381165064564765354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,91 +46,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368878518468219608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c38a8aa7ed16b434384367ec475c2795, type: 3}
+  m_Script: {fileID: 11500000, guid: 952c52efa76cf2c4fa39780ea759d897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tag: Platform
-  _maxActivations: 1
-  Entered:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6621670246478436336}
-        m_TargetAssemblyTypeName: ColorChanger, Assembly-CSharp
-        m_MethodName: SetRandomColor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2525253540249477330}
-        m_TargetAssemblyTypeName: Delay, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &6621670246478436336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368878518468219608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a59d7e5b8710ae41997f5e5cd962304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2525253540249477330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368878518468219608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a385630f54fe25446acbee7e12fdf696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _min: 2
-  _max: 5
-  _delayPassed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8595249564209004175}
-        m_TargetAssemblyTypeName: PoolableObject, Assembly-CSharp
-        m_MethodName: Deactivate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8595249564209004175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368878518468219608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58d705c18e8f95438d325a788a03dd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _minDelay: 2
+  _maxDelay: 5
+  _platformTag: Platform
 --- !u!114 &5183189123474886528
 MonoBehaviour:
   m_ObjectHideFlags: 0
