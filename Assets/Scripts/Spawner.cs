@@ -27,6 +27,7 @@ public class Spawner<T> : SpawnerInfo where T : PoolableObject
     protected T Spawn()
     {
         T obj = _pool.Get();
+        ++_spawnedCount;
         NotifyObjectSpawned(obj.gameObject);
         return obj;
     }
@@ -35,7 +36,6 @@ public class Spawner<T> : SpawnerInfo where T : PoolableObject
     {
         obj.ResetInternalState();
         obj.gameObject.SetActive(true);
-        ++_spawnedCount;
     }
 
     private T CreateNew()
