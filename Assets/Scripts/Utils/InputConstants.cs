@@ -1,4 +1,4 @@
-﻿internal class InputConstants
+﻿public class InputConstants
 {
     public const int FirstMouseButton = 0;
     public const int SecondMouseButton = 1;

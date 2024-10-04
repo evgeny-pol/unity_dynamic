@@ -1,81 +1,59 @@
-using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Spawner : MonoBehaviour
+public class Spawner<T> : SpawnerInfo where T : PoolableObject
 {
-    [SerializeField] private Vector3 _area;
-    [SerializeField] private float _interval;
-    [SerializeField] private PoolableObject _objectToSpawn;
+    [SerializeField] private T _objectToSpawn;
 
-    private Coroutine _spawnCoroutine;
-    private ObjectPool<PoolableObject> _pool;
-    private Vector3 _spawnAreaCorner;
+    private ObjectPool<T> _pool;
+    private int _spawnedCount;
 
-    private void Awake()
+    public override int SpawnedCount => _spawnedCount;
+
+    public override int CreatedCount => _pool.CountAll;
+
+    public override int ActiveCount => _pool.CountActive;
+
+    protected virtual void Awake()
     {
-        _spawnAreaCorner = transform.position - _area / 2;
-        _pool = new ObjectPool<PoolableObject>(
+        _pool = new ObjectPool<T>(
             createFunc: CreateNew,
             actionOnGet: ActionOnGet,
             actionOnRelease: obj => obj.gameObject.SetActive(false),
             actionOnDestroy: DestroyObject);
     }
 
-    private void OnEnable()
+    protected T Spawn()
     {
-        _spawnCoroutine = StartCoroutine(Spawn());
+        T obj = _pool.Get();
+        NotifyObjectSpawned(obj.gameObject);
+        return obj;
     }
 
-    private void OnDisable()
+    protected virtual void ActionOnGet(T obj)
     {
-        StopCoroutine(_spawnCoroutine);
+        obj.ResetInternalState();
+        obj.gameObject.SetActive(true);
+        ++_spawnedCount;
     }
 
-    private void OnDrawGizmos()
+    private T CreateNew()
     {
-        Gizmos.DrawWireCube(transform.position, _area);
-    }
-
-    private IEnumerator Spawn()
-    {
-        var delay = new WaitForSeconds(_interval);
-
-        while (enabled)
-        {
-            _pool.Get();
-            yield return delay;
-        }
-    }
-
-    private PoolableObject CreateNew()
-    {
-        PoolableObject newObj = Instantiate(_objectToSpawn);
+        T newObj = Instantiate(_objectToSpawn);
         newObj.Deactivated += OnObjectDeactivated;
         return newObj;
     }
 
-    private void DestroyObject(PoolableObject obj)
+    private void DestroyObject(T obj)
     {
         obj.Deactivated -= OnObjectDeactivated;
         Destroy(obj.gameObject);
     }
 
-    private void ActionOnGet(PoolableObject obj)
-    {
-        SetRandomPosition(obj);
-        obj.ResetInternalState();
-        obj.gameObject.SetActive(true);
-    }
-
-    private void SetRandomPosition(PoolableObject obj)
-    {
-        Vector3 position = _spawnAreaCorner + VectorUtils.GetRandomVector(_area);
-        obj.transform.SetPositionAndRotation(position, Random.rotation);
-    }
-
     private void OnObjectDeactivated(PoolableObject obj)
     {
-        _pool.Release(obj);
+        _pool.Release(obj as T);
+        NotifyObjectDespawned(obj.gameObject);
     }
 }
