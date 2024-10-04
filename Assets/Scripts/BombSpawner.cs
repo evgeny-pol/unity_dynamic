@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BombSpawner : Spawner<Bomb>
 {
-    [SerializeField] private Spawner<PoolableObject> _bombContainerSpawner;
+    [SerializeField] private SpawnerInfo _bombContainerSpawner;
 
     private void OnEnable()
     {
