@@ -6,7 +6,6 @@ public class FallingCube : PoolableObject, IResetableComponent
 {
     [SerializeField, Min(0f)] private float _minDelay;
     [SerializeField, Min(0f)] private float _maxDelay;
-    [SerializeField] private string _platformTag = Tags.Platform;
 
     private bool _hasCollided;
     private Coroutine _deactivationCoroutine;
@@ -29,7 +28,7 @@ public class FallingCube : PoolableObject, IResetableComponent
         if (_hasCollided)
             return;
 
-        if (collision.gameObject.CompareTag(_platformTag) == false)
+        if (collision.gameObject.TryGetComponent(out Platform _) == false)
             return;
 
         _hasCollided = true;

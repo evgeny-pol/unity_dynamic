@@ -2,21 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Spawner<T> : SpawnerInfo where T : PoolableObject
+[RequireComponent(typeof(SpawnerInfo))]
+public class Spawner<T> : MonoBehaviour where T : PoolableObject
 {
     [SerializeField] private T _objectToSpawn;
 
     private ObjectPool<T> _pool;
-    private int _spawnedCount;
-
-    public override int SpawnedCount => _spawnedCount;
-
-    public override int CreatedCount => _pool.CountAll;
-
-    public override int ActiveCount => _pool.CountActive;
+    private SpawnerInfo _spawnerInfo;
 
     protected virtual void Awake()
     {
+        _spawnerInfo = GetComponent<SpawnerInfo>();
         _pool = new ObjectPool<T>(
             createFunc: CreateNew,
             actionOnGet: ActionOnGet,
@@ -27,8 +23,9 @@ public class Spawner<T> : SpawnerInfo where T : PoolableObject
     protected T Spawn()
     {
         T obj = _pool.Get();
-        ++_spawnedCount;
-        NotifyObjectSpawned(obj.gameObject);
+        _spawnerInfo.SpawnedCount++;
+        _spawnerInfo.ActiveCount++;
+        _spawnerInfo.NotifyObjectSpawned(obj.gameObject);
         return obj;
     }
 
@@ -42,6 +39,7 @@ public class Spawner<T> : SpawnerInfo where T : PoolableObject
     {
         T newObj = Instantiate(_objectToSpawn);
         newObj.Deactivated += OnObjectDeactivated;
+        _spawnerInfo.CreatedCount++;
         return newObj;
     }
 
@@ -54,6 +52,7 @@ public class Spawner<T> : SpawnerInfo where T : PoolableObject
     private void OnObjectDeactivated(PoolableObject obj)
     {
         _pool.Release(obj as T);
-        NotifyObjectDespawned(obj.gameObject);
+        _spawnerInfo.ActiveCount--;
+        _spawnerInfo.NotifyObjectDespawned(obj.gameObject);
     }
 }

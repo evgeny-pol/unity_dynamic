@@ -3,8 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ResetableRigidbody : MonoBehaviour, IResetableComponent
 {
+    private Rigidbody _rigidbody;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     public void ResetComponentState()
     {
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
     }
 }
